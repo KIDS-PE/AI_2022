@@ -1,0 +1,11 @@
+venv_lstm/
+venv/
+result/
+_result/
+_temp/
+_revisions/
+.idea/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+*.pyc

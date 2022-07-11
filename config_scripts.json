@@ -1,0 +1,40 @@
+{
+	"question" : true, 
+    "scripts": [
+        { 
+            "id": 0,  
+            "path": "./0_cohort/0_create_cohort_person_in_db.py",
+            "run": true
+        }, 
+        { 
+            "id": 1,  
+            "path": "./1_importsql/0_readDB.py",
+            "run": true
+        }, 
+        { 
+            "id": 2,  
+            "path": "./2_preprocessing_xgboost/0_preprocessing_xgboost.py",
+            "run": false
+        }, 
+        { 
+            "id": 3,  
+            "path": "./3_xgboost_classification/0_xgboost.py",
+            "run": false
+        }, 
+        {
+            "id": 4,  
+            "path": "./4_preprocessing_lstm/0_preprocessing_lstm.py",
+            "run": true
+        }, 
+        {
+            "id": 5,  
+            "path": "./5_bi-lstm_attention_classification/0_lstm_attention.py",
+            "run": false
+        }, 
+        {
+            "id": 6,  
+            "path": "./6_imv_lstm_attention/0_imv_lstm_attention.py",
+            "run": true
+        }
+    ]
+}

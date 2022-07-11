@@ -1,11 +1,12 @@
-venv_lstm/
-venv/
-result/
+.venv/
 _result/
 _temp/
+_log/
 _revisions/
 .idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
-
 *.pyc
+query/
+data/
+result/

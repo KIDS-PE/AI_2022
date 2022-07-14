@@ -441,7 +441,7 @@ def filter_with_missing_rate(x, nCaseInTotal, nControlInTotal, threshold):
     fMissingRateForControl = nControlInConceptId / (nControlInTotal + fEpsilon)
     if (fMissingRateForCase < threshold) | (fMissingRateForControl < threshold) :
         return pd.DataFrame(columns=past_data.columns)
-    print("{}, {}, {}, {}, {:.2}, {}, {}, {:.2}".format(set(past_data.concept_id), set(past_data.concept_name), nCaseInConceptId, nCaseInTotal, fMissingRateForCase, nControlInConceptId, nControlInTotal, fMissingRateForControl))
+    # print("{}, {}, {}, {}, {:.2}, {}, {}, {:.2}".format(set(past_data.concept_id), set(past_data.concept_name), nCaseInConceptId, nCaseInTotal, fMissingRateForCase, nControlInConceptId, nControlInTotal, fMissingRateForControl))
     return x
 
 def filter_with_missing_rate_concept(x, nCaseInTotal, nControlInTotal, threshold):
@@ -453,7 +453,7 @@ def filter_with_missing_rate_concept(x, nCaseInTotal, nControlInTotal, threshold
     fMissingRateForControl = nControlInConceptId / (nControlInTotal + fEpsilon)
     if (fMissingRateForCase < threshold) | (fMissingRateForControl < threshold) :
         return pd.DataFrame(columns=past_data.columns)
-    print("{}, {}, {}, {}, {:.2}, {}, {}, {:.2}".format(set(past_data.concept_id), set(past_data.concept_name), nCaseInConceptId, nCaseInTotal, fMissingRateForCase, nControlInConceptId, nControlInTotal, fMissingRateForControl))
+    # print("{}, {}, {}, {}, {:.2}, {}, {}, {:.2}".format(set(past_data.concept_id), set(past_data.concept_name), nCaseInConceptId, nCaseInTotal, fMissingRateForCase, nControlInConceptId, nControlInTotal, fMissingRateForControl))
     
     temp_df = pd.DataFrame(columns = ['concept_id', 'concept_name', 'nCaseInConceptId', 'nCaseInTotal', 'fMissingRateForCase', 'nControlInConceptId', 'nControlInTotal', 'fMissingRateForControl'])
     var_temp = {}

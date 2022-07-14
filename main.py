@@ -10,7 +10,7 @@ with open('./{}'.format("config_scripts.json")) as file:
 
 # In[ ]:
 def question_yes_or_no(question):
-    if scripts["question"]:
+    if scripts['skip_yes_no_questions']:
         return True
     while "the answer is invalid":
         reply = str(input(question+' (y/n): ')).lower().strip()
@@ -24,7 +24,11 @@ def main():
     print('main executed')
     for script in scripts["scripts"]:
         scriptpath = script["path"]
-        if script["run"] & question_yes_or_no("Execute the '{}' script".format(scriptpath)):
+        
+        if script["skip_run"]:
+            continue
+        
+        if question_yes_or_no("Execute the '{}' script".format(scriptpath)):
             cwd = os.getcwd()
             filefullpath = os.path.abspath(scriptpath)
             os.chdir(os.path.dirname(filefullpath))

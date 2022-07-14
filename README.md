@@ -4,49 +4,22 @@
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
-├─_log
-├─_sql
-│  ├─person_meas
-│  ├─atlas_cohort
-│  └─person_drug
-├─_utils
-├─0_cohort
-│  └─0_create_cohort_person_in_db.py
-├─1_importsql
-│  └─0_readDB.py
-├─2_preprocessing_xgboost
-│  └─0_preprocessing_xgboost.py
-├─3_xgboost_classification
-│  └─0_xgboost.py
-├─4_preprocessing_lstm
-│  └─0_preprocessing_lstm.py
-├─5_bi-lstm_attention_classification
-│  └─0_lstm_attention.py
-├─9_code_data_visualization
-│  └─0_data_visualization.py
-├─data
-└─result
-
 * 0_cohort 
    - sql문을 실행시켜 DB에 person_{drug} / person_{meas} 생성 
 
 * 1_importsql
    - DB로 부터 데이터를 읽어와 첫 부작용 발생일 추가 및 데이터를 파일로 저장
 
-* 2_preprocessing_xgboost
-   - Timetable data 형태로 데이터 전처리
-    (Pivotting / feature selection / imputation..)
+* 2_feature_selection
+   - 모든 concept_set에서 유의미한 Feature 선정
 
-* 2_preprocessing_lstm
-   - TimeSeries data 형태로 데이터 전처리
+* 3_preprocessing_lstm
+   - TimeSeries data 형태로 데이터 전처리 
     (Pivotting / feature selection / imputation.. / window sliding)
+   - Feature 분포 확인 
 
-* 3_xgboost_classification
-   - xgboost 실행 및 matric 평가
-
-* 4_bi-lstm_attention_classification
-   - Bi-lstm attention 실행 및 matric 평가
+* 4_imv_lstm_attention
+   - IMV-lstm attention 실행 및 matric 평가
 
 * 9_code_data_visualization
    - 데이터 품질 확인 / 연령, 성별에 따른 분포 확인
@@ -82,6 +55,9 @@ edit config.json file
 ### Executing program
 
 run python script
+   1-1) Execute ipynb files in the order of folder number
+
+   or
 
    2-1) Execute full script
    > python main.py 

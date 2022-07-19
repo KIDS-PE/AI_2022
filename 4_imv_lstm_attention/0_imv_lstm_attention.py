@@ -214,7 +214,7 @@ def runTask(outcome_name):
         for batch_x, batch_y in test_loader:
             batch_x = batch_x
             batch_y = batch_y
-            aoutput, a, b = model(batch_x)
+            output, a, b = model(batch_x)
             output = output.squeeze(1)
             preds.append(output.detach().cpu().numpy())
             true.append(batch_y.detach().cpu().numpy())

@@ -28,7 +28,7 @@ FROM
 (
   select E.person_id, E.start_date, E.end_date,
          row_number() OVER (PARTITION BY E.person_id ORDER BY E.sort_date ASC) ordinal,
-         to_timestamp(to_timestamp(OP.observation_period_start_date, 'YYYY-MM-DD'), 'YYYY-MM-DD') as op_start_date, to_timestamp(to_timestamp(OP.observation_period_end_date, 'YYYY-MM-DD'), 'YYYY-MM-DD') as op_end_date, cast(E.visit_occurrence_id as bigint) as visit_occurrence_id
+         to_timestamp(to_timestamp(OP.OBSERVATION_PERIOD_START_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') as op_start_date, to_timestamp(to_timestamp(OP.OBSERVATION_PERIOD_END_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') as op_end_date, cast(E.visit_occurrence_id as bigint) as visit_occurrence_id
   FROM 
   (
   -- Begin Drug Exposure Criteria
@@ -46,8 +46,8 @@ JOIN Codesets cs on (de.drug_concept_id = cs.concept_id and cs.codeset_id = 8)
 -- End Drug Exposure Criteria
 
   ) E
-	JOIN @cdm_database_schema.observation_period OP on E.person_id = OP.person_id and E.start_date >=  to_timestamp(OP.observation_period_start_date, 'YYYY-MM-DD') and E.start_date <= to_timestamp(OP.observation_period_end_date, 'YYYY-MM-DD')
-  WHERE (to_timestamp(OP.observation_period_start_date, 'YYYY-MM-DD') + 30*INTERVAL'1 day') <= E.START_DATE AND (E.START_DATE + 0*INTERVAL'1 day') <= to_timestamp(OP.observation_period_end_date, 'YYYY-MM-DD')
+	JOIN @cdm_database_schema.observation_period OP on E.person_id = OP.person_id and E.start_date >=  to_timestamp(OP.OBSERVATION_PERIOD_START_DATE, 'YYYY-MM-DD') and E.start_date <= to_timestamp(OP.OBSERVATION_PERIOD_END_DATE, 'YYYY-MM-DD')
+  WHERE (to_timestamp(OP.OBSERVATION_PERIOD_START_DATE, 'YYYY-MM-DD') + 30*INTERVAL'1 day') <= E.START_DATE AND (E.START_DATE + 0*INTERVAL'1 day') <= to_timestamp(OP.OBSERVATION_PERIOD_END_DATE, 'YYYY-MM-DD')
 ) P
 
 -- End Primary Events
@@ -99,10 +99,9 @@ select C.person_id, C.measurement_id as event_id, C.measurement_date as start_da
        C.visit_occurrence_id, C.measurement_date as sort_date
 from 
 (
-  select m.person_id, m.measurement_id, m.measurement_concept_id, m.visit_occurrence_id, to_timestamp(m.measurement_date, 'YYYY-MM-DD') as measurement_date, CAST(m.value_as_number AS FLOAT) AS value_as_number, m.range_low, m.range_high
+  select m.person_id, m.measurement_id, m.measurement_concept_id, m.visit_occurrence_id, to_timestamp(m.measurement_date, 'YYYY-MM-DD') as measurement_date, cast(coalesce(nullif(m.value_as_number,''),'0') AS FLOAT) as value_as_number, m.range_low, m.range_high
   FROM @cdm_database_schema.MEASUREMENT m
 JOIN Codesets cs on (m.measurement_concept_id = cs.concept_id and cs.codeset_id = 0) 
-WHERE LENGTH(m.value_as_number) > 0
 ) C
 
 
@@ -156,10 +155,9 @@ select C.person_id, C.measurement_id as event_id, C.measurement_date as start_da
        C.visit_occurrence_id, C.measurement_date as sort_date
 from 
 (
-  select m.person_id, m.measurement_id, m.measurement_concept_id, m.visit_occurrence_id, to_timestamp(m.measurement_date, 'YYYY-MM-DD') as measurement_date, CAST(m.value_as_number AS FLOAT) AS value_as_number, m.range_low, m.range_high
+  select m.person_id, m.measurement_id, m.measurement_concept_id, m.visit_occurrence_id, to_timestamp(m.measurement_date, 'YYYY-MM-DD') as measurement_date, cast(coalesce(nullif(m.value_as_number,''),'0') AS FLOAT) as value_as_number, m.range_low, m.range_high
   FROM @cdm_database_schema.MEASUREMENT m
 JOIN Codesets cs on (m.measurement_concept_id = cs.concept_id and cs.codeset_id = 0) 
-WHERE LENGTH(m.value_as_number) > 0
 ) C
 
 WHERE C.value_as_number >= 1.2000
@@ -211,10 +209,9 @@ select C.person_id, C.measurement_id as event_id, C.measurement_date as start_da
        C.visit_occurrence_id, C.measurement_date as sort_date
 from 
 (
-  select m.person_id, m.measurement_id, m.measurement_concept_id, m.visit_occurrence_id, to_timestamp(m.measurement_date, 'YYYY-MM-DD') as measurement_date, CAST(m.value_as_number AS FLOAT) AS value_as_number, m.range_low, m.range_high
+  select m.person_id, m.measurement_id, m.measurement_concept_id, m.visit_occurrence_id, to_timestamp(m.measurement_date, 'YYYY-MM-DD') as measurement_date, cast(coalesce(nullif(m.value_as_number,''),'0') AS FLOAT) as value_as_number, m.range_low, m.range_high
   FROM @cdm_database_schema.MEASUREMENT m
 JOIN Codesets cs on (m.measurement_concept_id = cs.concept_id and cs.codeset_id = 0) 
-WHERE LENGTH(m.value_as_number) > 0
 ) C
 
 WHERE C.value_as_number >= 2.4000

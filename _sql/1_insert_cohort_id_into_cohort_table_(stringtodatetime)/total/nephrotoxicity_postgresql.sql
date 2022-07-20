@@ -37,7 +37,7 @@ select C.person_id, C.drug_exposure_id as event_id, C.drug_exposure_start_date a
        C.visit_occurrence_id,C.drug_exposure_start_date as sort_date
 from 
 (
-  select de.person_id, de.drug_concept_id, de.drug_exposure_id, de.visit_occurrence_id, to_timestamp(de.drug_exposure_start_date, 'YYYY-MM-DD') as drug_exposure_start_date, to_timestamp(de.durg_exposure_end_date, 'YYYY-MM-DD') as durg_exposure_end_date, CAST (de.days_supply AS INTEGER) as days_supply 
+  select de.person_id, de.drug_concept_id, de.drug_exposure_id, de.visit_occurrence_id, to_timestamp(de.drug_exposure_start_date, 'YYYY-MM-DD') as drug_exposure_start_date, to_timestamp(de.durg_exposure_end_date, 'YYYY-MM-DD') as durg_exposure_end_date, cast(coalesce(nullif(de.days_supply,''),'0') AS INTEGER) as days_supply 
   FROM @cdm_database_schema.DRUG_EXPOSURE de
 JOIN Codesets cs on (de.drug_concept_id = cs.concept_id and cs.codeset_id = 8)
 ) C

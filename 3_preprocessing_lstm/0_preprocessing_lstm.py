@@ -117,6 +117,13 @@ def runTask(outcome_name):
 
     print(len(meas_df), len(drug_df), len(proc_df), len(cond_df), (len(meas_df) + len(drug_df) + len(proc_df) + len(cond_df)))
 
+    # In[ ]: @Remove feature used in outcome define
+    drug_name = outcome_name
+    drug_concept_ids_excluded = map(int,cfg['drug'][drug_name]['@drug_concept_set'].split(','))
+    drug_df = drug_df.loc[~drug_df.concept_id.isin(drug_concept_ids_excluded)]
+    meas_concept_ids_excluded = map(int,[cfg['meas'][meas_name]['@meas_concept_id'] for meas_name in cfg['meas']])
+    meas_df = meas_df.loc[~meas_df.concept_id.isin(meas_concept_ids_excluded)]
+
     # @valid data processing for cohorts.
     meas_df = cohortConditionSetting(meas_df, pre_observation_period=60, post_observation_peroid=60)
     drug_df = cohortConditionSetting(drug_df, pre_observation_period=60, post_observation_peroid=60)

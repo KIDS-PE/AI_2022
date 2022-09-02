@@ -63,7 +63,7 @@ ON #temp_cohort_sampling.subject_id = @cdm_database_schema.person.person_id
 IF OBJECT_ID('@target_database_schema.@target_person_table') IS NOT NULL
 	DROP TABLE @target_database_schema.@target_person_table
 
-SELECT person_id, cohort_start_date, (YEAR(cohort_start_date)-year_of_birth) AS age, gender_source_value
+SELECT person_id, cohort_start_date, (YEAR(cohort_start_date)-year_of_birth) AS age, gender_concept_id
 INTO @target_database_schema.@target_person_table
 FROM #temp_person
 

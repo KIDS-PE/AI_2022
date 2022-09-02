@@ -14,10 +14,10 @@ from temp_cohort
 left join @cdm_database_schema.person
 on temp_cohort.subject_id = @cdm_database_schema.person.person_id;
 
--- 2-1. subject_id, cohort_start_date, age, gender_source_value
+-- 2-1. subject_id, cohort_start_date, age, gender_concept_id
 DROP TABLE IF EXISTS @target_database_schema.@target_person_table;
 
-select person_id, cohort_start_date, gender_source_value, (date_part('year', cohort_start_date)-year_of_birth) as age
+select person_id, cohort_start_date, gender_concept_id, (date_part('year', cohort_start_date)-year_of_birth) as age
 into @target_database_schema.@target_person_table
 from temp_cohortperson;
 

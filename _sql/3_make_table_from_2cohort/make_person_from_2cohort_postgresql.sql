@@ -57,7 +57,7 @@ ON temp_cohort_sampling.subject_id = @cdm_database_schema.person.person_id;
 
 DROP TABLE IF EXISTS @target_database_schema.@target_person_table;
 
-SELECT person_id, cohort_start_date, gender_source_value, (date_part('year', cohort_start_date)-year_of_birth) as age
+SELECT person_id, cohort_start_date, gender_concept_id, (date_part('year', cohort_start_date)-year_of_birth) as age
 INTO @target_database_schema.@target_person_table
 FROM temp_person;
 

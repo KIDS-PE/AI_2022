@@ -239,6 +239,14 @@ def runTask(outcome_name):
     betas = betas[..., 0]
     alphas = alphas.transpose(1, 0)
 
+    figure_data = {}
+    figure_data['alphas'] = alphas
+    figure_data['betas'] = betas
+    figure_data['cols'] = cols
+    with open(output_result_dir.joinpath('figure_data.pickle'), 'wb') as f:
+        import pickle
+        pickle.dump(figure_data, f, pickle.HIGHEST_PROTOCOL)
+
     fig, ax = plt.subplots(figsize=(40, 30))
     im = ax.imshow(alphas)
     ax.set_xticks(np.arange(X_train_t.shape[1]))

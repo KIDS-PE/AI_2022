@@ -6,7 +6,7 @@ from math import sqrt
 
 def save_JointPlot(df, filedir, filename):
     plt.figure()
-    joint_plot = sns.jointplot(x="age", y="value_as_number", data=df, kind="kde", hue="gender_source_value", markers=["M", "F"])
+    joint_plot = sns.jointplot(x="age", y="value_as_number", data=df, kind="kde", hue="gender_concept_id", markers=["M", "F"])
     plt.suptitle(t="{}(age-value) plot".format(filename), y=1.02)
     plt.xlabel(xlabel="age")
     plt.ylabel(ylabel="lab value")
@@ -20,7 +20,7 @@ def save_quadplot(df, filedir, filename):
 
     #1 
     plot1 = axes[0,0]
-    sns.countplot(ax=plot1, data=df, x="gender_source_value")
+    sns.countplot(ax=plot1, data=df, x="gender_concept_id")
     plot1.set_title("count by gender")
     plot1.set_xlabel(xlabel="gender")
     plot1.set_ylabel(ylabel="count (n)")
@@ -36,8 +36,8 @@ def save_quadplot(df, filedir, filename):
 
     #2
     plot3 = axes[1,0]
-    sns.lineplot(ax=plot3, x='age_dec', y="person_id",data=df[df['gender_source_value']=='M'].groupby(['age_dec']).count(), marker='o', alpha=0.6, label='M')
-    sns.lineplot(ax=plot3, x='age_dec', y="person_id",data=df[df['gender_source_value']=='F'].groupby(['age_dec']).count(), marker='o', alpha=0.6, label='F')
+    sns.lineplot(ax=plot3, x='age_dec', y="person_id",data=df[df['gender_concept_id']==8507].groupby(['age_dec']).count(), marker='o', alpha=0.6, label='M')
+    sns.lineplot(ax=plot3, x='age_dec', y="person_id",data=df[df['gender_concept_id']==8532].groupby(['age_dec']).count(), marker='o', alpha=0.6, label='F')
     sns.lineplot(ax=plot3, x='age_dec', y="person_id", data=df.groupby(['age_dec']).count(), marker='o', label='ALL')
     plot3.set_title("count by age")
     plot3.set_xlabel(xlabel="age")
@@ -46,7 +46,7 @@ def save_quadplot(df, filedir, filename):
 
     #3
     plot4 = axes[1,1]
-    ax = sns.boxplot(ax=plot4, x="age_dec", y="value_as_number", data=df, hue="gender_source_value") #, palette="Set3"
+    ax = sns.boxplot(ax=plot4, x="age_dec", y="value_as_number", data=df, hue="gender_concept_id") #, palette="Set3"
     plot4.set_title("value by age and gender")
     plot4.set_xlabel(xlabel="age")
     plot4.set_ylabel(ylabel="value")

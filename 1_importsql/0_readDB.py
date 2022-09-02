@@ -136,9 +136,9 @@ for outcome_name in tqdm(cfg['drug'].keys()) :
 
         # In[ ]:
         # population_df['label'] = (~population_df['first_abnormal_date'].isnull()).astype(int)
-        population_df.rename(columns={'gender_source_value':'sex'}, inplace=True)
-        population_df['sex'].replace(['F', 'Female'], 0, inplace=True)
-        population_df['sex'].replace(['M', 'Male'], 1, inplace=True)
+        population_df.rename(columns={'gender_concept_id':'sex'}, inplace=True)
+        population_df['sex'].replace(8532, 0, inplace=True)
+        population_df['sex'].replace(8507, 1, inplace=True)
 
         # meas_df = meas_df[["person_id","measurement_concept_id","measurement_date","value_as_number"]]
         meas_df = meas_df[["person_id", "measurement_concept_id", "measurement_date", "value_as_number", "range_low", "range_high"]]
@@ -207,6 +207,19 @@ for outcome_name in tqdm(cfg['drug'].keys()) :
         # ***** setting first abnormal date *****
         # # ** hepatotoxicity (간독성) **
 
+        concept_id_AST = cfg['meas']["AST"]['@meas_concept_id']
+        concept_id_ALT = cfg['meas']["ALT"]['@meas_concept_id']
+        concept_id_ALP = cfg['meas']["ALP"]['@meas_concept_id']
+        concept_id_TB = cfg['meas']["TB"]['@meas_concept_id']
+        concept_id_CR = cfg['meas']["CR"]['@meas_concept_id']
+        meas_df['range_high'] = 0
+        meas_df.loc[meas_df['concept_id']==concept_id_AST, 'range_high'] = 34.0
+        meas_df.loc[meas_df['concept_id']==concept_id_ALT, 'range_high'] = 46.0
+        meas_df.loc[meas_df['concept_id']==concept_id_ALP, 'range_high'] = 300.0
+        meas_df.loc[meas_df['concept_id']==concept_id_TB, 'range_high'] = 1.8
+        meas_df.loc[meas_df['concept_id']==concept_id_CR, 'range_high'] = 1.2
+        meas_df['concept_value'].fillna(0.0)
+        
         if 'hepatotoxicity' == cfg['drug'][outcome_name]['ade'] :
             _3times = 3
             _2times = 2

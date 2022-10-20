@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 and
 
-graphviz install (https://graphviz.org/download/)
+~~graphviz install (https://graphviz.org/download/)~~
 - Check installation
   : cmd or terminal > "dot -V"
 

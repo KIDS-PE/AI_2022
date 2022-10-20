@@ -1,7 +1,6 @@
 .venv/
 _result/
 _temp/
-_log/
 _revisions/
 .idea/
 # Byte-compiled / optimized / DLL files

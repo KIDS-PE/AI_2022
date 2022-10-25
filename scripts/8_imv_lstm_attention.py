@@ -71,6 +71,19 @@ log.debug('start {}'.format(curr_file_name))
 # %%
 # In[ ]:
 """
+    2) set GPU or CPU Device
+"""
+# If using GPU set to 0, Otherwise, using CPU set to -1 (If the value is changed, a restart is required.)
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1" 
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+    print("GPU is available")
+else:
+    device = torch.device("cpu")
+    print("GPU not available, CPU used")
+# %%
+# In[ ]:
+"""
     4) user functions definition 
 """
 def get_time_stamp(df):
@@ -189,7 +202,7 @@ def runTask(outcome_name):
     """
         (8) define model & hyper parameters
     """
-    model = IMVFullLSTM(X_train_t.shape[2], 1, 128)
+    model = IMVFullLSTM(X_train_t.shape[2], 1, 128).to(device)
     opt = torch.optim.Adam(model.parameters(), lr=params['learningrate'])
     epoch_scheduler = torch.optim.lr_scheduler.StepLR(opt, 20, gamma=0.9)
     
@@ -206,8 +219,8 @@ def runTask(outcome_name):
     for i in range(epochs):
         mse_train = 0
         for batch_x, batch_y in train_loader:
-            batch_x = batch_x
-            batch_y = batch_y
+            batch_x = batch_x.to(device)
+            batch_y = batch_y.to(device)
             opt.zero_grad()
             y_pred, alphas, betas = model(batch_x)
             y_pred = y_pred.squeeze(1)
@@ -221,8 +234,8 @@ def runTask(outcome_name):
             preds = []
             true = []
             for batch_x, batch_y in val_loader:
-                batch_x = batch_x
-                batch_y = batch_y
+                batch_x = batch_x.to(device)
+                batch_y = batch_y.to(device)
                 output, alphas, betas = model(batch_x)
                 output = output.squeeze(1)
                 preds.append(output.detach().cpu().numpy())
@@ -265,8 +278,8 @@ def runTask(outcome_name):
         alphas = []
         betas = []
         for batch_x, batch_y in test_loader:
-            batch_x = batch_x
-            batch_y = batch_y
+            batch_x = batch_x.to(device)
+            batch_y = batch_y.to(device)
             output, a, b = model(batch_x)
             output = output.squeeze(1)
             preds.append(output.detach().cpu().numpy())

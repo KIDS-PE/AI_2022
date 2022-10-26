@@ -112,7 +112,7 @@ def runTask(outcome_name):
         2) set Table name and read table from DB
     """
     # ** set Tablename for reading from DB **
-    tnPerson = '{}.person_{}'.format(db_cfg["@person_database_schema"], outcome_name)
+    tnPerson = '{}.person_{}_psm'.format(db_cfg["@person_database_schema"], outcome_name)
     tnMeasurement = '{}.measurement'.format(db_cfg["@cdm_database_schema"])
     tnDrug = '{}.drug_exposure'.format(db_cfg["@cdm_database_schema"])
     tnProcedure = '{}.procedure_occurrence'.format(db_cfg["@cdm_database_schema"])
@@ -160,15 +160,15 @@ def runTask(outcome_name):
         return df.loc[df.person_id.isin(psm_person_ids)].reset_index()
 
     person_df = pd.read_sql(sql=sql_person_query, con=conn)
-    person_df = filterPatients(person_df, psm_person_ids)
+    # person_df = filterPatients(person_df, psm_person_ids)
     meas_df = pd.read_sql(sql=sql_meas_query, con=conn)
-    meas_df = filterPatients(meas_df, psm_person_ids)
+    # meas_df = filterPatients(meas_df, psm_person_ids)
     drug_df = pd.read_sql(sql=sql_drug_query, con=conn)
-    drug_df = filterPatients(drug_df, psm_person_ids)
+    # drug_df = filterPatients(drug_df, psm_person_ids)
     proc_df = pd.read_sql(sql=sql_proc_query, con=conn)
-    proc_df = filterPatients(proc_df, psm_person_ids)
+    # proc_df = filterPatients(proc_df, psm_person_ids)
     cond_df = pd.read_sql(sql=sql_cond_query, con=conn)
-    cond_df = filterPatients(cond_df, psm_person_ids)
+    # cond_df = filterPatients(cond_df, psm_person_ids)
     concept_df = pd.read_sql(sql=sql_concept_query, con=conn)
 
     # In[ ]:

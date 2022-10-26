@@ -24,11 +24,16 @@ class IMVTensorLSTM(torch.jit.ScriptModule):
         self.Phi = nn.Linear(2*n_units, output_dim)
         self.n_units = n_units
         self.input_dim = input_dim
-    
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        if(torch.cuda.is_available()):
+            print("Using GPU")
+        else:
+            print("Using CPU")
+            
     @torch.jit.script_method
     def forward(self, x):
-        h_tilda_t = torch.zeros(x.shape[0], self.input_dim, self.n_units)
-        c_tilda_t = torch.zeros(x.shape[0], self.input_dim, self.n_units)
+        h_tilda_t = torch.zeros(x.shape[0], self.input_dim, self.n_units).to(self.device)
+        c_tilda_t = torch.zeros(x.shape[0], self.input_dim, self.n_units).to(self.device)
         outputs = torch.jit.annotate(List[Tensor], [])
         for t in range(x.shape[1]):
             # eq 1
@@ -79,10 +84,15 @@ class IMVFullLSTM(torch.jit.ScriptModule):
         self.Phi = nn.Linear(2*n_units, output_dim)
         self.n_units = n_units
         self.input_dim = input_dim
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        if(torch.cuda.is_available()):
+            print("Using GPU")
+        else:
+            print("Using CPU")
     @torch.jit.script_method
     def forward(self, x):
-        h_tilda_t = torch.zeros(x.shape[0], self.input_dim, self.n_units)
-        c_t = torch.zeros(x.shape[0], self.input_dim*self.n_units)
+        h_tilda_t = torch.zeros(x.shape[0], self.input_dim, self.n_units).to(self.device)
+        c_t = torch.zeros(x.shape[0], self.input_dim*self.n_units).to(self.device)
         outputs = torch.jit.annotate(List[Tensor], [])
         for t in range(x.shape[1]):
             # eq 1

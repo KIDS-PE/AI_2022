@@ -59,24 +59,42 @@ log = log.create_logger(file_name="../_log/{}.log".format(curr_file_name), mode=
 log.debug('start {}'.format(curr_file_name))
 
 # %%
-# In[ ]:
+# # In[ ]:
+# """
+# 5) connection DataBase
+# """
+# if (cfg["dbms"]=="postgresql"):
+#     db_cfg = cfg["postgresql"]
+#     import psycopg2 as pg
+#     conn = pg.connect(host=db_cfg['@server'], user=db_cfg['@user'], password=db_cfg['@password'], port=db_cfg['@port'], dbname=db_cfg['@database']) 
+#     log.debug("postgresql connect")
+    
+# elif (cfg["dbms"]=="mssql"):
+#     db_cfg = cfg["mssql"]
+#     import pymssql
+#     conn= pymssql.connect(server=db_cfg['@server'], user=db_cfg['@user'], password=db_cfg['@password'], port=db_cfg['@port'], database=db_cfg['@database'], as_dict=False)
+#     log.debug("mssql connect")
+    
+# else:
+#     log.warning("set config.json - sql - dbms : mssql or postgresql")
+
+# %%
 """
 5) connection DataBase
 """
-if (cfg["dbms"]=="postgresql"):
-    db_cfg = cfg["postgresql"]
-    import psycopg2 as pg
-    conn = pg.connect(host=db_cfg['@server'], user=db_cfg['@user'], password=db_cfg['@password'], port=db_cfg['@port'], dbname=db_cfg['@database']) 
-    log.debug("postgresql connect")
-    
-elif (cfg["dbms"]=="mssql"):
-    db_cfg = cfg["mssql"]
-    import pymssql
-    conn= pymssql.connect(server=db_cfg['@server'], user=db_cfg['@user'], password=db_cfg['@password'], port=db_cfg['@port'], database=db_cfg['@database'], as_dict=False)
-    log.debug("mssql connect")
-    
-else:
-    log.warning("set config.json - sql - dbms : mssql or postgresql")
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+driver = cfg["dbms"]
+db_cfg = cfg[driver]
+username = db_cfg["@user"]
+password = db_cfg["@password"]
+host = db_cfg["@server"]
+port = db_cfg["@port"]
+database = db_cfg["@database"]
+url = f"{driver}://{username}:{password}@{host}:{port}/{database}"
+conn = create_engine(url, echo=True)
+sessionlocal = sessionmaker(autocommit=False, autoflush=True, bind=conn)
 
 # %%
 def runTask(outcome_name):
@@ -206,6 +224,7 @@ def runTask(outcome_name):
     psm_person_ids = matched_df.person_id.values
     person_df = pd.read_sql(sql=sql_person_query, con=conn)
     psm_person_df = person_df.loc[person_df.person_id.isin(psm_person_ids)].reset_index(drop=True)
+    psm_person_df.to_sql(name=f"person_{outcome_name.lower()}_psm", schema=cfg[driver]["@person_database_schema"], con=conn, if_exists='replace', index=False)
     psm_person_df.to_csv(output_data_dir.joinpath('psm_person_df.txt'),index=False)
     import pickle
     with open(output_data_dir.joinpath('psm_person_ids.pkl'), 'wb') as f:

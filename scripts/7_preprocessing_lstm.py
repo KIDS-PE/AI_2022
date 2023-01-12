@@ -157,20 +157,20 @@ def runTask(outcome_name):
 
     meas_df = meas_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
     drug_df = drug_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
-    cond_df = cond_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
     proc_df = proc_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
+    cond_df = cond_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
 
     meas_concept_df = meas_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate_concept(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
     drug_concept_df = drug_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate_concept(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
-    cond_concept_df = cond_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate_concept(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
     proc_concept_df = proc_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate_concept(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
+    cond_concept_df = cond_df.groupby('concept_id').apply(lambda x : filter_with_missing_rate_concept(x, nCaseInTotal, nControlInTotal, threshold=0.1)).reset_index(drop=True)
 
     meas_concept_df['concept_domain'] = 'meas'
     drug_concept_df['concept_domain'] = 'drug'
-    cond_concept_df['concept_domain'] = 'proc'
-    proc_concept_df['concept_domain'] = 'cond'
+    proc_concept_df['concept_domain'] = 'proc'
+    cond_concept_df['concept_domain'] = 'cond'
     
-    all_domain_concept_df = pd.concat([meas_concept_df, drug_concept_df, cond_concept_df, proc_concept_df], axis=0, ignore_index=True)
+    all_domain_concept_df = pd.concat([meas_concept_df, drug_concept_df, proc_concept_df, cond_concept_df], axis=0, ignore_index=True)
     all_domain_concept_df.to_csv('{}/{}_feature_2.csv'.format(output_result_dir, outcome_name), header=True, index=True)
     # -------------------------------------------------------------------
     
@@ -184,15 +184,15 @@ def runTask(outcome_name):
     #pd.options.display.precision = 3
     meas_vars_df = meas_vars_df.sort_values(by='pvalue', ascending=True).reset_index(drop=True).head(30)
     drug_vars_df = drug_vars_df.sort_values(by='pvalue', ascending=True).reset_index(drop=True).head(30)
-    cond_vars_df = cond_vars_df.sort_values(by='pvalue', ascending=True).reset_index(drop=True).head(30)
     proc_vars_df = proc_vars_df.sort_values(by='pvalue', ascending=True).reset_index(drop=True).head(30)
+    cond_vars_df = cond_vars_df.sort_values(by='pvalue', ascending=True).reset_index(drop=True).head(30)
     print(len(meas_vars_df), len(drug_vars_df), len(proc_vars_df), len(cond_vars_df))
     
     meas_vars_df['concept_domain'] = 'meas'
     drug_vars_df['concept_domain'] = 'drug'
-    cond_vars_df['concept_domain'] = 'proc'
-    proc_vars_df['concept_domain'] = 'cond'
-    all_domain_vars_df = pd.concat([meas_vars_df, drug_vars_df, cond_vars_df, proc_vars_df], axis=0, ignore_index=True)
+    proc_vars_df['concept_domain'] = 'proc'
+    cond_vars_df['concept_domain'] = 'cond'
+    all_domain_vars_df = pd.concat([meas_vars_df, drug_vars_df, proc_vars_df, cond_vars_df], axis=0, ignore_index=True)
     # @variable selection (save)
     all_domain_vars_df.to_csv('{}/{}_feature.csv'.format(output_result_dir, outcome_name), header=True, index=True)
     # all_domain_vars_df = pd.read_csv('{}/{}_{}_feature.csv'.format(output_result_dir, outcome_name), index_col=False) #check

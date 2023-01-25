@@ -92,7 +92,11 @@ password = db_cfg["@password"]
 host = db_cfg["@server"]
 port = db_cfg["@port"]
 database = db_cfg["@database"]
-url = f"{driver}://{username}:{password}@{host}:{port}/{database}"
+if cfg["dbms"] == "mssql":
+    sqldriver = "mssql+pymssql"
+elif cfg["dbms"] == "postgresql":
+    sqldriver = "postgresql+psycopg2"
+url = f"{sqldriver}://{username}:{password}@{host}:{port}/{database}"
 engine = create_engine(url, echo=True)
 sessionlocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
 

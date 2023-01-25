@@ -93,8 +93,8 @@ host = db_cfg["@server"]
 port = db_cfg["@port"]
 database = db_cfg["@database"]
 url = f"{driver}://{username}:{password}@{host}:{port}/{database}"
-conn = create_engine(url, echo=True)
-sessionlocal = sessionmaker(autocommit=False, autoflush=True, bind=conn)
+engine = create_engine(url, echo=True)
+sessionlocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
 
 # %%
 def runTask(outcome_name):
@@ -143,8 +143,8 @@ def runTask(outcome_name):
     AND person_id IN (SELECT person_id FROM {tnPopulation});
     """
 
-    person_df = pd.read_sql(sql=sql_person_query, con=conn)
-    meas_df = pd.read_sql(sql=sql_meas_query, con=conn)
+    person_df = pd.read_sql(sql=sql_person_query, con=engine)
+    meas_df = pd.read_sql(sql=sql_meas_query, con=engine)
 
     # In[ ]:
     """
@@ -222,9 +222,9 @@ def runTask(outcome_name):
         (11) Filtered by PSMatched patient IDs and saved as a file
     """
     psm_person_ids = matched_df.person_id.values
-    person_df = pd.read_sql(sql=sql_person_query, con=conn)
+    person_df = pd.read_sql(sql=sql_person_query, con=engine)
     psm_person_df = person_df.loc[person_df.person_id.isin(psm_person_ids)].reset_index(drop=True)
-    psm_person_df.to_sql(name=f"person_{outcome_name.lower()}_psm", schema=cfg[driver]["@person_database_schema"], con=conn, if_exists='replace', index=False)
+    psm_person_df.to_sql(name=f"person_{outcome_name.lower()}_psm", schema=cfg[driver]["@person_database_schema"], con=engine, if_exists='replace', index=False)
     psm_person_df.to_csv(output_data_dir.joinpath('psm_person_df.txt'),index=False)
     import pickle
     with open(output_data_dir.joinpath('psm_person_ids.pkl'), 'wb') as f:
@@ -251,6 +251,4 @@ for outcome_name in tqdm(cfg['drug'].keys()) :
 
 
 # %%
-conn.close() # Close DB Connection
-
-# %%
+engine.dispose()

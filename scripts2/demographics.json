@@ -24,13 +24,13 @@
         "name" : "measurement",
         "items" : {
             "item1" : {"name" : "Creatinine", "concept_id": [3016723]},
-            "item2" : {"name" : "BUN", "concept_id": [4017361]},
+            "item2" : {"name" : "BUN", "concept_id": [4017361, 3013682, 3004295]},
             "item3" : {"name" : "Urine output", "concept_id": [3014315, 40481610]},
             "item4" : {"name" : "Sodium", "concept_id": [3019550]},
             "item5" : {"name" : "Potassium", "concept_id": [3023103]},
             "item6" : {"name" : "Glucose", "concept_id": [3004501]},
-            "item8" : {"name" : "Creatinine clearance", "concept_id": [37205200]},
-            "item9" : {"name" : "glomerular filtration rate (GFR)", "concept_id": [1029770, 3299239, 4213477, 45934920, 45438635, 44806420]}
+            "item7" : {"name" : "Creatinine clearance", "concept_id": [37205200]},
+            "item8" : {"name" : "glomerular filtration rate (GFR)", "concept_id": [3029859, 1029770, 3299239, 4213477, 45934920, 45438635, 44806420]}
         }
     }
 }

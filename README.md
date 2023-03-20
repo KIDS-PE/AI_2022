@@ -1,29 +1,17 @@
-# CDM기반 의약품 부작용 예측모델 (간독성 / 신독성)
+# MOA CDM-based drug side effect artificial intelligence model development and validation​
 
-해당 프로젝트는 공통데이터모델(CDM)기반 특정 약물 복용군 대상 간독성/신독성 부작용 예측모델을 생성하는 것을 목표로 한다. 
+Purpose​ : Development and validation of drug-induced nephrotoxicity and hepatotoxicity prediction model using Common Data Model
 
 ## Description
-
-* 0_cohort 
-   - sql문을 실행시켜 DB에 person_{drug} / person_{meas} 생성 
-
-* 1_importsql
-   - DB로 부터 데이터를 읽어와 첫 부작용 발생일 추가 및 데이터를 파일로 저장
-
-* 2_feature_selection
-   - 모든 concept_set에서 유의미한 Feature 선정
-
-* 3_preprocessing_lstm
-   - TimeSeries data 형태로 데이터 전처리 
-    (Pivotting / feature selection / imputation.. / window sliding)
-   - Feature 분포 확인 
-
-* 4_imv_lstm_attention
-   - IMV-lstm attention 실행 및 matric 평가
-
-* 9_code_data_visualization
-   - 데이터 품질 확인 / 연령, 성별에 따른 분포 확인
-
+├── scripts  
+│   ├── 1_create_cohort_person_in_db.ipynb  
+│   ├── 2_propensity_score_matching.ipynb  
+│   ├── 3_merge_domain_data.ipynb  
+│   ├── 4_feature_selections.ipynb  
+│   ├── 5_preprocessing_xgboost.ipynb  
+│   ├── 6_xgboost.ipynb  
+│   ├── 7_preprocessing_lstm.ipynb  
+│   ├── 8_imv_lstm_attention.ipynb  
 
 ### Installing
 
@@ -34,7 +22,7 @@ pip install -r requirements.txt
 
 and
 
-graphviz install (https://graphviz.org/download/)
+~~graphviz install (https://graphviz.org/download/)~~
 - Check installation
   : cmd or terminal > "dot -V"
 
@@ -57,19 +45,9 @@ edit config.json file
 run python script
    1-1) Execute ipynb files in the order of folder number
 
-   or
-
-   2-1) Execute full script
-   > python main.py 
-      Step by step run with (y)/(n).
-   
-   2-2) Run individual scripts
-   > cd 0_cohort_json
-   > python 0_create_cohort_person_in_db.py
-
 ### Result export
-   - data (모델 생성을 위한 데이터 저장)
-   - result (결과 추출을 위한 데이터 저장)
+   - data (data for model training)
+   - result (Preprocessing results / evaluation of learning performance)
    > Compress and export the result dir
 
 ## Help
@@ -78,11 +56,8 @@ run python script
 
 ## Authors
 
-suncheol heo
 Researcher, DHLab, Department of Biomedical Systems Informatics,
 Yonsei University College of Medicine, Seoul
-mobile: (+82) 10 2789 8800
-hepsie50@gmail.com
 
 ## Version History
 

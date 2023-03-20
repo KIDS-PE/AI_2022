@@ -40,18 +40,18 @@ WHERE b.person_id IS NULL;
 -- 3. 
 DROP TABLE IF EXISTS temp_person;
 
-select m.person_id, m.measurement_concept_id, m.value_as_number, p.gender_concept_id, (date_part('year', m.measurement_date)-p.year_of_birth) as age, p.year_of_birth, m.measurement_date
+select m.person_id, m.measurement_concept_id, m.value_as_number, p.gender_source_value, (date_part('year', m.measurement_date)-p.year_of_birth) as age, p.year_of_birth, m.measurement_date
 into temp temp_person
 from (
 	(select * from temp_meas_group) as m
 	inner join
-	(select person_id, year_of_birth, gender_concept_id from @cdm_database_schema.person) as p
+	(select person_id, year_of_birth, gender_source_value from @cdm_database_schema.person) as p
 	on m.person_id = p.person_id
 );
 
 DROP TABLE IF EXISTS @target_database_schema.@target_person_table;
 
-select person_id, measurement_concept_id, value_as_number, gender_concept_id, age
+select person_id, measurement_concept_id, value_as_number, gender_source_value, age
 into @target_database_schema.@target_person_table
 from temp_person;
 

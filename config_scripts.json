@@ -1,29 +1,34 @@
 {
-	"skip_yes_no_questions" : false, 
+    "skip_yes_no_questions" : false, 
     "scripts": [
         { 
             "id": 0,  
-            "path": "./0_cohort/0_create_cohort_person_in_db.py",
+            "path": "./scripts/1_create_cohort_person_in_db.py",
             "skip_run": false
         }, 
         { 
             "id": 1,  
-            "path": "./1_importsql/0_readDB.py",
+            "path": "./scripts/2_propensity_score_matching.py",
             "skip_run": false
         }, 
         { 
             "id": 2,  
-            "path": "./2_feature_selection/0_feature_selections.py",
+            "path": "./scripts/3_merge_domain_data.py",
             "skip_run": false
         },
         {
             "id": 3,  
-            "path": "./3_preprocessing_lstm/0_xgboost.py",
+            "path": "./scripts/4_feature_selections.py",
             "skip_run": false
         }, 
         {
             "id": 4,  
-            "path": "./4_imv_lstm_attention/0_imv_lstm_attention.py",
+            "path": "./scripts/7_preprocessing_lstm.py",
+            "skip_run": false
+        }, 
+        {
+            "id": 5,  
+            "path": "./scripts/8_imv_lstm_attention.py",
             "skip_run": false
         }
     ]

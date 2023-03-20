@@ -44,19 +44,19 @@ WHERE b.person_id IS NULL;
 IF OBJECT_ID('tempdb..#temp_meas_person') IS NOT NULL
 	DROP TABLE #temp_meas_person
 
-select m.person_id, m.measurement_concept_id, m.value_as_number, p.gender_concept_id, (YEAR(m.measurement_date)-p.year_of_birth) as age, p.year_of_birth, m.measurement_date
+select m.person_id, m.measurement_concept_id, m.value_as_number, p.gender_source_value, (YEAR(m.measurement_date)-p.year_of_birth) as age, p.year_of_birth, m.measurement_date
 into #temp_meas_person
 from (
 	(select * from #temp_meas_group) as m
 	inner join
-	(select person_id, year_of_birth, gender_concept_id from @cdm_database_schema.person) as p
+	(select person_id, year_of_birth, gender_source_value from @cdm_database_schema.person) as p
 	on m.person_id = p.person_id
 )
 
 IF OBJECT_ID('@target_database_schema.@target_person_table') IS NOT NULL
 	DROP TABLE @target_database_schema.@target_person_table
 
-select person_id, measurement_concept_id, value_as_number, gender_concept_id, age
+select person_id, measurement_concept_id, value_as_number, gender_source_value, age
 into @target_database_schema.@target_person_table
 from #temp_meas_person
 

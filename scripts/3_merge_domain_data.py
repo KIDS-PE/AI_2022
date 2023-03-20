@@ -199,9 +199,9 @@ def runTask(outcome_name):
     def convert_gender_column(_df, inplace=False):
         df = _df if inplace==True else _df.copy()
         """Change the column name to sex and display 0 for female and 1 for male"""
-        if 'gender_source_concept_id' in df.columns and df['gender_source_concept_id'].notnull().all():
-            print("selected gender_source_concept_id")
-            df.rename(columns={'gender_source_concept_id':'sex'}, inplace=True)
+        if 'gender_source_id' in df.columns and df['gender_source_id'].notnull().all():
+            print("selected gender_source_id")
+            df.rename(columns={'gender_source_id':'sex'}, inplace=True)
             df['sex'].replace(8532, 0, inplace=True)
             df['sex'].replace(8507, 1, inplace=True)
         elif 'gender_source_value' in df.columns and df['gender_source_value'].notnull().all():

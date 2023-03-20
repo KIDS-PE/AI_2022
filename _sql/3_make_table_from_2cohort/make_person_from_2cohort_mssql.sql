@@ -75,7 +75,7 @@ SELECT person_id
 , first_abnormal_date
 , (YEAR(cohort_start_date)-year_of_birth) AS age
 , gender_source_value
-, gender_source_concept_id
+, gender_source_id
 , n_diff
 INTO @target_database_schema.@target_person_table
 FROM #temp_person;

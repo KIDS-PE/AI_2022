@@ -1,0 +1,359 @@
+{
+  "ConceptSets": [
+    {
+      "id": 1,
+      "name": "AST",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Lab Test",
+              "CONCEPT_CODE": "1920-8",
+              "CONCEPT_ID": 3013721,
+              "CONCEPT_NAME": "Aspartate aminotransferase [Enzymatic activity/volume] in Serum or Plasma",
+              "DOMAIN_ID": "Measurement",
+              "INVALID_REASON_CAPTION": "Unknown",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "LOINC"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "ALT",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Lab Test",
+              "CONCEPT_CODE": "1742-6",
+              "CONCEPT_ID": 3006923,
+              "CONCEPT_NAME": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma",
+              "DOMAIN_ID": "Measurement",
+              "INVALID_REASON_CAPTION": "Unknown",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "LOINC"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Total bilirubin",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Lab Test",
+              "CONCEPT_CODE": "1975-2",
+              "CONCEPT_ID": 3024128,
+              "CONCEPT_NAME": "Bilirubin.total [Mass/volume] in Serum or Plasma",
+              "DOMAIN_ID": "Measurement",
+              "INVALID_REASON_CAPTION": "Unknown",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "LOINC"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "ALP",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Lab Test",
+              "CONCEPT_CODE": "6768-6",
+              "CONCEPT_ID": 3035995,
+              "CONCEPT_NAME": "Alkaline phosphatase [Enzymatic activity/volume] in Serum or Plasma",
+              "DOMAIN_ID": "Measurement",
+              "INVALID_REASON_CAPTION": "Unknown",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "LOINC"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 0,
+      "name": "lamotrigine",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Ingredient",
+              "CONCEPT_CODE": "161",
+              "CONCEPT_ID": 705103,
+              "CONCEPT_NAME": "lamotrigine",
+              "DOMAIN_ID": "Drug",
+              "INVALID_REASON_CAPTION": "Unknown",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "RxNorm"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "PrimaryCriteria": {
+    "CriteriaList": [
+      {
+        "DrugEra": {
+          "CodesetId": 0
+        }
+      }
+    ],
+    "ObservationWindow": {
+      "PriorDays": 30,
+      "PostDays": 0
+    },
+    "PrimaryCriteriaLimit": {
+      "Type": "All"
+    }
+  },
+  "QualifiedLimit": {
+    "Type": "First"
+  },
+  "ExpressionLimit": {
+    "Type": "All"
+  },
+  "InclusionRules": [
+    {
+      "name": "Previous liver function test measures",
+      "expression": {
+        "Type": "AT_LEAST",
+        "Count": 2,
+        "CriteriaList": [
+          {
+            "Criteria": {
+              "Measurement": {
+                "CodesetId": 1
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 60,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 2,
+              "Count": 1
+            }
+          },
+          {
+            "Criteria": {
+              "Measurement": {
+                "CodesetId": 2
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 60,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 2,
+              "Count": 1
+            }
+          },
+          {
+            "Criteria": {
+              "Measurement": {
+                "CodesetId": 3
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 60,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 2,
+              "Count": 1
+            }
+          },
+          {
+            "Criteria": {
+              "Measurement": {
+                "CodesetId": 4
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 60,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 2,
+              "Count": 1
+            }
+          }
+        ],
+        "DemographicCriteriaList": [],
+        "Groups": []
+      }
+    },
+    {
+      "name": "Without abnormal LFT",
+      "expression": {
+        "Type": "ALL",
+        "CriteriaList": [
+          {
+            "Criteria": {
+              "Measurement": {
+                "CodesetId": 1,
+                "RangeHighRatio": {
+                  "Value": 1,
+                  "Op": "gt"
+                }
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 60,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 1,
+              "Count": 0
+            }
+          },
+          {
+            "Criteria": {
+              "Measurement": {
+                "CodesetId": 2,
+                "RangeHighRatio": {
+                  "Value": 1,
+                  "Op": "gt"
+                }
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 60,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 1,
+              "Count": 0
+            }
+          },
+          {
+            "Criteria": {
+              "Measurement": {
+                "CodesetId": 4,
+                "RangeHighRatio": {
+                  "Value": 1,
+                  "Op": "gt"
+                }
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 60,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 1,
+              "Count": 0
+            }
+          },
+          {
+            "Criteria": {
+              "Measurement": {
+                "CodesetId": 3,
+                "RangeHighRatio": {
+                  "Value": 1,
+                  "Op": "gt"
+                }
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 60,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 0,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 1,
+              "Count": 0
+            }
+          }
+        ],
+        "DemographicCriteriaList": [],
+        "Groups": []
+      }
+    }
+  ],
+  "EndStrategy": {
+    "DateOffset": {
+      "DateField": "StartDate",
+      "Offset": 7
+    }
+  },
+  "CensoringCriteria": [],
+  "CollapseSettings": {
+    "CollapseType": "ERA",
+    "EraPad": 0
+  },
+  "CensorWindow": {},
+  "cdmVersionRange": ">=5.0.0"
+}

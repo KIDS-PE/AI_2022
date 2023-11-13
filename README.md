@@ -28,13 +28,18 @@ pip install -r requirements.txt
 pip install psycopg2-binary
 '''
 2. Edit the config.json file with the appropriate parameters:
-- working_date: Date to run the program.
-- dbms: MSSQL or PostgreSQL.
-- mssql or postgresql: Server, user, password, and port.
-- meas: meas_concept_id (used by the institution).
-- translatequerysql: CDM database schema, target database schema, and target database schema.
+- "working_date": Date to run the program.
+- "dbms": MSSQL or PostgreSQL.
+- @Server, @user, @password, and @port : database connection information.
+- @database : cdm database name
+- @cdm_database_schema : cdm database schema that contains standardized data tables (person, drug_exposure, etc..)
+- @person_database_schema : extra schema to save tables during analysis. (NOTE that the user must have permissions to read, write, remove tables in the schema.)
+- @target_database_schema : same as @person_database_schema
+- @vocabulary_database_schema : cdm database schema that contains standardized vocabularies tables (concept, concept_ancestor, concept_relationship, etc...)
+- meas: meas_concept_id of AST, ALT, ALP, Total Bilirubin, Creatinine, PT(INR) (used by the institution).
+- translatequerysql0 ~ translatequerysql4: modify @cdm_database_schema, @target_database_schema, @vocabulary_database_schema as described above
 
-3. Execute the Jupyter Notebook files in the scripts folder in the order of folder number.
+3. Execute the Jupyter Notebook files in the scripts folder in the order of folder number. (Script 1 > 2 > 3 > 4 > 7 > 8)
 
 ### Results Export
 The following directories are generated during the program execution:

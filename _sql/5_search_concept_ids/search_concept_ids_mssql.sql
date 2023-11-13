@@ -5,7 +5,7 @@ IF OBJECT_ID('tempdb..#temp_drug_concept') IS NOT NULL
 SELECT DISTINCT concept_id, concept_name, standard_concept, vocabulary_id
 INTO #temp_drug_concept
 FROM @cohort_database_schema.drug_exposure d
-LEFT JOIN @cohort_database_schema.concept c
+INNER JOIN @cohort_database_schema.concept c
 ON d.drug_concept_id = c.concept_id
 
 -- 2, search string

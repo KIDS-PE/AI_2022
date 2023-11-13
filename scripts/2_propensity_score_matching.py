@@ -27,7 +27,7 @@ from _utils.customlogger import customlogger as CL
 from _utils.preprocessing import *
 from _utils.psmatch import *
 
-pd.set_option('display.max_colwidth', -1)  #각 컬럼 width 최대로 
+# pd.set_option('display.max_colwidth', -1)  #각 컬럼 width 최대로 
 pd.set_option('display.max_rows', 50)      # display 50개 까지 
 
 # %%

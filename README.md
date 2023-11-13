@@ -43,12 +43,9 @@ The following directories are generated during the program execution:
 - result: Preprocessing results and evaluation of learning performance.
 To export the results, compress and export the result directory.
 
-## Help
-If you need help with the project, please refer to the documentation or contact the authors.
-- suncheolheo, hepsie50@gmail.com
-
 ## Authors
 This project was developed by a researcher at the DHLab, Department of Biomedical Systems Informatics, Yonsei University College of Medicine, Seoul.
+This project was partially modified by Office of Pharmacoepidemiology and Big Data, Korea Institute of Drug Safety & Risk Management.
 
 ## Version History
 - v1.0.0 : Initial Release

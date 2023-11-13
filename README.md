@@ -49,8 +49,8 @@ The following directories are generated during the program execution:
 To export the results, compress and export the result directory.
 
 ## Authors
-This project was developed by a researcher at the DHLab, Department of Biomedical Systems Informatics, Yonsei University College of Medicine, Seoul.
-This project was partially modified by Office of Pharmacoepidemiology and Big Data, Korea Institute of Drug Safety & Risk Management.
+- This project was developed by a researcher at the DHLab, Department of Biomedical Systems Informatics, Yonsei University College of Medicine, Seoul.
+- This project was partially modified by Office of Pharmacoepidemiology and Big Data, Korea Institute of Drug Safety & Risk Management.
 
 ## Version History
 - v1.0.0 : Initial Release
